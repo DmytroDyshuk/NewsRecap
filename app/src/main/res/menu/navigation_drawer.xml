@@ -1,27 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-            <item
-                android:id="@+id/item_bbc"
-                android:title="BBC News"
-                android:checkable="true" />
-            <item
-                android:id="@+id/item_cnn"
-                android:title="CNN"
-                android:checkable="true" />
-            <item
-                android:id="@+id/item_buzzfeed"
-                android:title="Buzzfeed"
-                android:checkable="true" />
-            <item
-                android:id="@+id/item_fox"
-                android:title="Fox"
-                android:checkable="true" />
-            <item
-                android:id="@+id/item_espn"
-                android:title="ESPN"
-                android:checkable="true" />
-            <item
-                android:id="@+id/item_abc_news"
-                android:title="ABC News"
-                android:checkable="true" />
+    <item
+        android:id="@+id/item_wsj"
+        android:title="The Wall Street Journal"
+        android:checkable="true" />
+    <item
+        android:id="@+id/item_washington_post"
+        android:title="The Washington Post"
+        android:checkable="true" />
+    <item
+        android:id="@+id/item_time"
+        android:title="Time"
+        android:checkable="true" />
+    <item
+        android:id="@+id/item_bbc"
+        android:title="BBC News"
+        android:checkable="true" />
+    <item
+        android:id="@+id/item_bloomberg"
+        android:title="Bloomberg"
+        android:checkable="true" />
+    <item
+        android:id="@+id/item_abc_news"
+        android:title="ABC News"
+        android:checkable="true" />
+    <item
+        android:id="@+id/item_cnn_news"
+        android:title="CNN"
+        android:checkable="true" />
+    <item
+        android:id="@+id/item_fox_news"
+        android:title="Fox News"
+        android:checkable="true" />
+    <item
+        android:id="@+id/item_ign_news"
+        android:title="IGN"
+        android:checkable="true" />
+    <item
+        android:id="@+id/item_national_geographic"
+        android:title="National Geographic"
+        android:checkable="true" />
 </menu>
