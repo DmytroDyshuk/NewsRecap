@@ -39,4 +39,5 @@ class NewsListFragment: Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

@@ -6,10 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginBottom="8dp"
+    android:layout_margin="8dp"
     app:cardElevation="6dp">
 
     <LinearLayout
@@ -37,8 +34,8 @@
                 android:id="@+id/tv_news_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="News title"
-                android:textSize="22sp" />
+                android:textAppearance="@style/TextNewsItemTitle"
+                android:text="News title" />
 
             <Space
                 android:layout_width="0dp"
@@ -49,8 +46,9 @@
                 android:id="@+id/iv_news_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="14:13"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/roboto"
+                android:text="14:13" />
 
         </LinearLayout>
 
@@ -58,9 +56,11 @@
             android:id="@+id/tv_news_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Defense Secretary Lloyd Austin and Gen. Mark A. Milley, chairman of the Joint Chiefs of Staff, spoke to their counterparts in Russia. U.S. officials lauded Ukraine for holding Bakhmut."
+            android:layout_marginStart="14dp"
             android:layout_marginTop="8dp"
-            android:layout_marginStart="14dp" />
+            android:textAppearance="@style/TextNewsItemDescription"
+            android:text="Defense Secretary Lloyd Austin and Gen. Mark A. Milley, chairman of the Joint Chiefs of Staff, spoke to their counterparts in Russia. U.S. officials lauded Ukraine for holding Bakhmut."
+            />
 
     </LinearLayout>
 
