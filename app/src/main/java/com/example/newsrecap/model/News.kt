@@ -1,5 +1,7 @@
 package com.example.newsrecap.model
 
+import java.util.IdentityHashMap
+
 data class News(
     val id: Long = 0,
     val author: String,

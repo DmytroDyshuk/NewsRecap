@@ -1,9 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp"
+    app:cardElevation="6dp">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="14dp">
 
+        <ImageView
+            android:id="@+id/iv_news_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/test_picture"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp">
+
+            <TextView
+                android:id="@+id/tv_news_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="News title"
+                android:textSize="22sp" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/iv_news_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="14:13"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_news_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Defense Secretary Lloyd Austin and Gen. Mark A. Milley, chairman of the Joint Chiefs of Staff, spoke to their counterparts in Russia. U.S. officials lauded Ukraine for holding Bakhmut."
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="14dp" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
