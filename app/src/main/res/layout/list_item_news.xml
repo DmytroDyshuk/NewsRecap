@@ -31,7 +31,7 @@
             android:paddingEnd="14dp">
 
             <TextView
-                android:id="@+id/iv_news_time"
+                android:id="@+id/tv_news_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
