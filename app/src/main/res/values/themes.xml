@@ -20,7 +20,7 @@
     </style>
 
     <style name="TextNewsItemTitle">
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="fontFamily">@font/roboto_bold_italic</item>
         <item name="android:textColor">@color/black</item>
     </style>
