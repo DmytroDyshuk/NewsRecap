@@ -16,10 +16,6 @@ class NewsViewModel: ViewModel() {
     val newsList: LiveData<List<News>> = _newsList
     val source: LiveData<String> = _source
 
-    init {
-
-    }
-
     fun getNewsList() {
         viewModelScope.launch {
             try {

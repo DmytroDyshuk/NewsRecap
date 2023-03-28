@@ -2,38 +2,38 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/item_wsj"
-        android:title="The Wall Street Journal"
+        android:title="@string/wsj_news"
         android:checkable="true" />
     <item
         android:id="@+id/item_washington_post"
-        android:title="The Washington Post"
+        android:title="@string/the_washington_post"
         android:checkable="true" />
     <item
         android:id="@+id/item_time"
-        android:title="Time"
+        android:title="@string/time"
         android:checkable="true" />
     <item
         android:id="@+id/item_bbc"
-        android:title="BBC News"
+        android:title="@string/bbc_news"
         android:checkable="true" />
     <item
         android:id="@+id/item_abc_news"
-        android:title="ABC News"
+        android:title="@string/abc_news"
         android:checkable="true" />
     <item
         android:id="@+id/item_cnn_news"
-        android:title="CNN"
+        android:title="@string/cnn_news"
         android:checkable="true" />
     <item
         android:id="@+id/item_fox_news"
-        android:title="Fox News"
+        android:title="@string/fox_news"
         android:checkable="true" />
     <item
         android:id="@+id/item_ign_news"
-        android:title="IGN"
+        android:title="@string/ign"
         android:checkable="true" />
     <item
         android:id="@+id/item_national_geographic"
-        android:title="National Geographic"
+        android:title="@string/national_geographic"
         android:checkable="true" />
 </menu>

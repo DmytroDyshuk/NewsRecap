@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">NewsRecap</string>
+
+    <string name="wsj_news">The Wall Street Journal</string>
+    <string name="the_washington_post">The Washington Post</string>
+    <string name="time">Time</string>
+    <string name="bbc_news">BBC News</string>
+    <string name="abc_news">ABC News</string>
+    <string name="cnn_news">CNN</string>
+    <string name="fox_news">Fox News</string>
+    <string name="ign">IGN</string>
+    <string name="national_geographic">National Geographic</string>
 </resources>
