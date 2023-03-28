@@ -27,6 +27,8 @@ class NewsListFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.ivLoadingAnimation.visibility = View.VISIBLE
 
+        viewModel.getEverythingNewsList()
+
         viewModel.source.observe(viewLifecycleOwner) {
             viewModel.getNewsList()
         }

@@ -11,6 +11,8 @@ import retrofit2.http.Query
 
 private const val BASE_URL = "https://newsapi.org/v2/"
 
+private const val DOMAINS = "wsj.com, washingtonpost.com, time.com, ign.com, cnn.com"
+
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
     .build()
@@ -23,6 +25,9 @@ private val retrofit = Retrofit.Builder()
 interface NewsApiService {
     @GET("top-headlines")
     suspend fun getNews(@Query("sources") source: String, @Query("apiKey") apiKey: String = BuildConfig.MY_API_KEY): NewsResponse
+
+    @GET("everything")
+    suspend fun getEverythingNews(@Query("domains") domains: String = DOMAINS, @Query("apiKey") apiKey: String = BuildConfig.MY_API_KEY): NewsResponse
 }
 
 object NewsApi {

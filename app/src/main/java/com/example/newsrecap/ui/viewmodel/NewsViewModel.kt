@@ -32,4 +32,15 @@ class NewsViewModel: ViewModel() {
     fun setNewSource(source: String) {
         _source.value = source
     }
+
+    fun getEverythingNewsList() {
+        viewModelScope.launch {
+            try {
+                val everythingResult = NewsApi.retrofitService.getEverythingNews()
+                _newsList.value = everythingResult.articles
+            } catch (e: Exception) {
+                _newsList.value = listOf()
+            }
+        }
+    }
 }

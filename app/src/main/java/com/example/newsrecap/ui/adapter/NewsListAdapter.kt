@@ -38,6 +38,7 @@ class NewsListAdapter: ListAdapter<News, NewsListAdapter.NewsViewHolder>(DiffCal
                 }
                 tvNewsTitle.text = news.title
                 tvNewsDescription.text = news.description
+                tvMediaTitle.text = news.source?.name
 
                 news.publishedAt?.let {
                     try {

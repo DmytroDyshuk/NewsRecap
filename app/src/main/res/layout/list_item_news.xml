@@ -30,22 +30,38 @@
             android:paddingStart="14dp"
             android:paddingEnd="14dp">
 
-            <TextView
-                android:id="@+id/tv_news_time"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:fontFamily="@font/roboto"
-                android:text="14:13 | 21.03"
-                android:textSize="12sp"/>
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_media_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:layout_marginEnd="8dp"
+                    tools:text="The Washington Post" />
+
+
+                <TextView
+                    android:id="@+id/tv_news_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="12sp"
+                    tools:text="14:13 | 21.03"/>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_news_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextNewsItemTitle"
-                android:text="News title"
-                android:layout_marginTop="4dp"/>
+                android:layout_marginTop="4dp"
+                tools:text="News title"/>
 
         </LinearLayout>
 
@@ -57,7 +73,7 @@
             android:layout_marginEnd="14dp"
             android:layout_marginTop="8dp"
             android:textAppearance="@style/TextNewsItemDescription"
-            android:text="Defense Secretary Lloyd Austin and Gen. Mark A. Milley, chairman of the Joint Chiefs of Staff, spoke to their counterparts in Russia. U.S. officials lauded Ukraine for holding Bakhmut."
+            tools:text="Defense Secretary Lloyd Austin and Gen. Mark A. Milley, chairman of the Joint Chiefs of Staff, spoke to their counterparts in Russia. U.S. officials lauded Ukraine for holding Bakhmut."
             />
 
     </LinearLayout>
