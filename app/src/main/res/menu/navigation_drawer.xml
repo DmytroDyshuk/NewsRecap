@@ -17,10 +17,6 @@
         android:title="BBC News"
         android:checkable="true" />
     <item
-        android:id="@+id/item_bloomberg"
-        android:title="Bloomberg"
-        android:checkable="true" />
-    <item
         android:id="@+id/item_abc_news"
         android:title="ABC News"
         android:checkable="true" />

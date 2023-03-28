@@ -7,6 +7,7 @@ import retrofit2.http.GET
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.http.Query
 
 private const val BASE_URL = "https://newsapi.org/v2/"
 
@@ -20,8 +21,8 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface NewsApiService {
-    @GET("top-headlines?sources=the-washington-post&apiKey=${BuildConfig.MY_API_KEY}")
-    suspend fun getNews(): NewsResponse
+    @GET("top-headlines")
+    suspend fun getNews(@Query("sources") source: String, @Query("apiKey") apiKey: String = BuildConfig.MY_API_KEY): NewsResponse
 }
 
 object NewsApi {

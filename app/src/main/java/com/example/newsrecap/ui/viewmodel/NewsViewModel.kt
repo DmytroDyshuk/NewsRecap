@@ -8,28 +8,32 @@ import com.example.newsrecap.model.News
 import com.example.newsrecap.network.NewsApi
 import kotlinx.coroutines.launch
 
-class NewsViewModel(): ViewModel() {
+class NewsViewModel: ViewModel() {
 
-    private val _status = MutableLiveData<String>()
     private val _newsList = MutableLiveData<List<News>>()
+    private val _source = MutableLiveData<String>()
 
-    val status: LiveData<String> = _status
-    val newsList:LiveData<List<News>> = _newsList
+    val newsList: LiveData<List<News>> = _newsList
+    val source: LiveData<String> = _source
 
     init {
-        getNewsList()
+
     }
 
-    private fun getNewsList() {
+    fun getNewsList() {
         viewModelScope.launch {
             try {
-                val newsResult = NewsApi.retrofitService.getNews()
-                _newsList.value = newsResult.articles
-                _status.value = "Success: ${newsResult.status} News retrieved"
+                source.value?.let {
+                    val newsResult = NewsApi.retrofitService.getNews(it)
+                    _newsList.value = newsResult.articles
+                }
             } catch (e: Exception) {
-                _status.value = "Failure: ${e.message}"
                 _newsList.value = listOf()
             }
         }
+    }
+
+    fun setNewSource(source: String) {
+        _source.value = source
     }
 }

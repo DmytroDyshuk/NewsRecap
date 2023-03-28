@@ -2,6 +2,7 @@ package com.example.newsrecap.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -9,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.newsrecap.R
 import com.example.newsrecap.databinding.ListItemNewsBinding
 import com.example.newsrecap.model.News
+import java.lang.reflect.InvocationTargetException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,7 +32,7 @@ class NewsListAdapter: ListAdapter<News, NewsListAdapter.NewsViewHolder>(DiffCal
                 news.urlToImage?.let {
                     Glide.with(itemView)
                         .load(it)
-                        .placeholder(R.drawable.loading_animation)
+                        .placeholder(R.drawable.loading_animation_24)
                         .error(R.drawable.vector_broken_image)
                         .into(ivNewsImage)
                 }
@@ -38,13 +40,21 @@ class NewsListAdapter: ListAdapter<News, NewsListAdapter.NewsViewHolder>(DiffCal
                 tvNewsDescription.text = news.description
 
                 news.publishedAt?.let {
-                    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
-                    val outputFormat = SimpleDateFormat("HH:mm | dd.MM", Locale.getDefault())
-                    val date = inputFormat.parse(it)
-                    val output = outputFormat.format(date)
-                    tvNewsTime.text = output
+                    try {
+                        parseTime(it, "yyyy-MM-dd'T'HH:mm:ss'Z'", tvNewsTime)
+                    } catch (e: Exception) {
+                        parseTime(it, "yyyy-MM-dd'T'HH:mm:ss.SSSSSSS'Z'", tvNewsTime)
+                    }
                 }
             }
+        }
+
+        private fun parseTime(publishedAt: String, inputFormat: String, view: TextView) {
+            val inputFormat = SimpleDateFormat(inputFormat, Locale.getDefault())
+            val outputFormat = SimpleDateFormat("HH:mm | dd.MM", Locale.getDefault())
+            val date = inputFormat.parse(publishedAt)
+            val output = outputFormat.format(date)
+            view.text = output
         }
     }
 
