@@ -29,10 +29,6 @@ class NewsViewModel: ViewModel() {
         }
     }
 
-    fun setNewSource(source: String) {
-        _source.value = source
-    }
-
     fun getEverythingNewsList() {
         viewModelScope.launch {
             try {
@@ -42,5 +38,9 @@ class NewsViewModel: ViewModel() {
                 _newsList.value = listOf()
             }
         }
+    }
+
+    fun setNewSource(source: String) {
+        _source.value = source
     }
 }

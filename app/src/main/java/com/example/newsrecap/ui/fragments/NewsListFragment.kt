@@ -29,13 +29,14 @@ class NewsListFragment: Fragment() {
 
         viewModel.getEverythingNewsList()
 
+        val adapter = NewsListAdapter()
+        binding.rvNewsList.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvNewsList.adapter = adapter
+
         viewModel.source.observe(viewLifecycleOwner) {
             viewModel.getNewsList()
         }
 
-        val adapter = NewsListAdapter()
-        binding.rvNewsList.adapter = adapter
-        binding.rvNewsList.layoutManager = LinearLayoutManager(this.context)
         viewModel.newsList.observe(viewLifecycleOwner) { newsList ->
             adapter.submitList(newsList)
             binding.ivLoadingAnimation.visibility = View.INVISIBLE
