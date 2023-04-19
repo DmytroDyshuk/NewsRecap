@@ -27,8 +27,6 @@ class NewsListFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.ivLoadingAnimation.visibility = View.VISIBLE
 
-        viewModel.getEverythingNewsList()
-
         val adapter = NewsListAdapter()
         binding.rvNewsList.layoutManager = LinearLayoutManager(requireContext())
         binding.rvNewsList.adapter = adapter

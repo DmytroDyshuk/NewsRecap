@@ -10,7 +10,6 @@ import com.bumptech.glide.Glide
 import com.example.newsrecap.R
 import com.example.newsrecap.databinding.ListItemNewsBinding
 import com.example.newsrecap.model.News
-import java.lang.reflect.InvocationTargetException
 import java.text.SimpleDateFormat
 import java.util.*
 
