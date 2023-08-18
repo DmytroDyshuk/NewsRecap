@@ -35,6 +35,7 @@ class NewsListAdapter: ListAdapter<News, NewsListAdapter.NewsViewHolder>(DiffCal
                         .error(R.drawable.vector_broken_image)
                         .into(ivNewsImage)
                 }
+
                 tvNewsTitle.text = news.title
                 tvNewsDescription.text = news.description
                 tvMediaTitle.text = news.source?.name
