@@ -1,6 +1,7 @@
 package com.example.newsrecap
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
 import androidx.activity.viewModels
@@ -107,5 +108,9 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+    }
+
+    private fun setOnPreDrawListener() {
+
     }
 }

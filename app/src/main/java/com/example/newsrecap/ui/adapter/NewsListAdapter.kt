@@ -50,11 +50,11 @@ class NewsListAdapter: ListAdapter<News, NewsListAdapter.NewsViewHolder>(DiffCal
             }
         }
 
-        private fun parseTime(publishedAt: String, inputFormat: String, view: TextView) {
-            val inputFormat = SimpleDateFormat(inputFormat, Locale.getDefault())
+        private fun parseTime(publishedAt: String, format: String, view: TextView) {
+            val inputFormat = SimpleDateFormat(format, Locale.getDefault())
             val outputFormat = SimpleDateFormat("HH:mm | dd.MM", Locale.getDefault())
             val date = inputFormat.parse(publishedAt)
-            val output = outputFormat.format(date)
+            val output = date?.let { outputFormat.format(it) }
             view.text = output
         }
     }

@@ -10,4 +10,5 @@
         android:name="com.example.newsrecap.ui.fragments.NewsListFragment"
         android:label="fragment_news_list"
         tools:layout="@layout/fragment_news_list" />
+
 </navigation>
