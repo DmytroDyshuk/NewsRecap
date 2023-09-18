@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newsrecap.model.News
-import com.example.newsrecap.network.NewsApi
+import com.example.newsrecap.network.RetrofitService
 import kotlinx.coroutines.launch
 
 class NewsViewModel: ViewModel() {
@@ -20,7 +20,7 @@ class NewsViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 source.value?.let {
-                    val newsResult = NewsApi.retrofitService.getNews(it)
+                    val newsResult = RetrofitService.newsApiService.getNews(it)
                     _newsList.value = newsResult.articles
                 }
             } catch (e: Exception) {
@@ -32,7 +32,7 @@ class NewsViewModel: ViewModel() {
     fun getEverythingNewsList() {
         viewModelScope.launch {
             try {
-                val everythingResult = NewsApi.retrofitService.getEverythingNews()
+                val everythingResult = RetrofitService.newsApiService.getEverythingNews()
                 _newsList.value = everythingResult.articles
             } catch (e: Exception) {
                 _newsList.value = listOf()
