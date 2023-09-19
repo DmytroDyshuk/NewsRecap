@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newsrecap.R
 import com.example.newsrecap.databinding.ListItemNewsBinding
-import com.example.newsrecap.model.News
+import com.example.newsrecap.domain.model.News
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -61,7 +61,7 @@ class NewsListAdapter: ListAdapter<News, NewsListAdapter.NewsViewHolder>(DiffCal
 
     companion object DiffCallback : DiffUtil.ItemCallback<News>() {
         override fun areItemsTheSame(oldItem: News, newItem: News): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.content == newItem.content
         }
 
         override fun areContentsTheSame(oldItem: News, newItem: News): Boolean {

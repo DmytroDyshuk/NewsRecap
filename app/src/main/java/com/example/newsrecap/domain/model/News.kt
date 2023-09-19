@@ -1,7 +1,6 @@
-package com.example.newsrecap.model
+package com.example.newsrecap.domain.model
 
 data class News(
-    val id: Long = 0,
     val source: Source?,
     val author: String?,
     val title: String?,

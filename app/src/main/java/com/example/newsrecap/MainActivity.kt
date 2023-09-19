@@ -1,11 +1,9 @@
 package com.example.newsrecap
 
 import android.os.Bundle
-import android.view.View
-import android.view.ViewTreeObserver
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.ViewModelProvider
 import com.example.newsrecap.databinding.ActivityMainBinding
 import com.example.newsrecap.ui.viewmodel.NewsViewModel
 import com.example.newsrecap.utils.SourcesConstants
@@ -14,31 +12,35 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val viewModel: NewsViewModel by viewModels()
+    private val viewModel: NewsViewModel by lazy {
+        val activity = requireNotNull(this@MainActivity) {
+            "You can only access the viewModel after onActivityCreated()"
+        }
+        ViewModelProvider(this, NewsViewModel.Factory(activity.application))[NewsViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Handle the splash screen transition.
         installSplashScreen()
         super.onCreate(savedInstanceState)
-        viewModel.getEverythingNewsList()
 
         // Set up an OnPreDrawListener to the root view.
-        val content: View = findViewById(android.R.id.content)
-        content.viewTreeObserver.addOnPreDrawListener(
-            object : ViewTreeObserver.OnPreDrawListener {
-                override fun onPreDraw(): Boolean {
-                    // Check whether the initial data is ready.
-                    return if (viewModel.newsList.value != null) {
-                        // The content is ready. Start drawing.
-                        content.viewTreeObserver.removeOnPreDrawListener(this)
-                        true
-                    } else {
-                        // The content isn't ready. Suspend.
-                        false
-                    }
-                }
-            }
-        )
+//        val content: View = findViewById(android.R.id.content)
+//        content.viewTreeObserver.addOnPreDrawListener(
+//            object : ViewTreeObserver.OnPreDrawListener {
+//                override fun onPreDraw(): Boolean {
+//                    // Check whether the initial data is ready.
+//                    return if (viewModel.newsList.value != null) {
+//                        // The content is ready. Start drawing.
+//                        content.viewTreeObserver.removeOnPreDrawListener(this)
+//                        true
+//                    } else {
+//                        // The content isn't ready. Suspend.
+//                        false
+//                    }
+//                }
+//            }
+//        )
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
