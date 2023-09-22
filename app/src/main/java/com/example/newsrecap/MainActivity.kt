@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity() {
         installSplashScreen()
         super.onCreate(savedInstanceState)
 
+        //TODO: Solve problem with OnPreDrawListener
+
         // Set up an OnPreDrawListener to the root view.
 //        val content: View = findViewById(android.R.id.content)
 //        content.viewTreeObserver.addOnPreDrawListener(
