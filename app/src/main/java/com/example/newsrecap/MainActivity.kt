@@ -22,27 +22,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         // Handle the splash screen transition.
         installSplashScreen()
+
         super.onCreate(savedInstanceState)
-
-        //TODO: Solve problem with OnPreDrawListener
-
-        // Set up an OnPreDrawListener to the root view.
-//        val content: View = findViewById(android.R.id.content)
-//        content.viewTreeObserver.addOnPreDrawListener(
-//            object : ViewTreeObserver.OnPreDrawListener {
-//                override fun onPreDraw(): Boolean {
-//                    // Check whether the initial data is ready.
-//                    return if (viewModel.newsList.value != null) {
-//                        // The content is ready. Start drawing.
-//                        content.viewTreeObserver.removeOnPreDrawListener(this)
-//                        true
-//                    } else {
-//                        // The content isn't ready. Suspend.
-//                        false
-//                    }
-//                }
-//            }
-//        )
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

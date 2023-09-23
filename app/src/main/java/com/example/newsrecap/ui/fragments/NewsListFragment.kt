@@ -17,9 +17,7 @@ class NewsListFragment: Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: NewsViewModel by lazy {
-        val activity = requireNotNull(this.activity) {
-            "You can only access the viewModel after onActivityCreated()"
-        }
+        val activity = requireNotNull(this.activity)
         ViewModelProvider(this, NewsViewModel.Factory(activity.application))[NewsViewModel::class.java]
     }
 
