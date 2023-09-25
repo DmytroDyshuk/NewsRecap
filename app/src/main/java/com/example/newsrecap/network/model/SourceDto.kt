@@ -15,10 +15,3 @@ fun SourceDto.asDomainModel(): Source {
         name = this@asDomainModel.name
     )
 }
-
-//fun SourceDto.asDatabaseModel(): DatabaseSource {
-//    return DatabaseSource(
-//        id = this@asDatabaseModel.id,
-//        name = this@asDatabaseModel.name
-//    )
-//}

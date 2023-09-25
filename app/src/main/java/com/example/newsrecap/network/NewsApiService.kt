@@ -2,7 +2,7 @@ package com.example.newsrecap.network
 
 import com.example.newsrecap.BuildConfig
 import com.example.newsrecap.network.model.NewsResponseDto
-import com.example.newsrecap.utils.Constants.DOMAINS
+import com.example.newsrecap.utils.constants.Constants.DOMAINS
 import retrofit2.http.GET
 import retrofit2.http.Query
 

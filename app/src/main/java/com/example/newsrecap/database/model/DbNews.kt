@@ -6,7 +6,7 @@ import com.example.newsrecap.domain.model.News
 import com.example.newsrecap.domain.model.Source
 
 @Entity
-data class DatabaseNews constructor(
+data class DbNews constructor(
     @PrimaryKey(autoGenerate = true)
     var primaryKey: Int = 0,
     val source: Source?,
@@ -19,7 +19,7 @@ data class DatabaseNews constructor(
     val content: String?
 )
 
-fun List<DatabaseNews>.asDomainModel(): List<News> {
+fun List<DbNews>.asDomainModel(): List<News> {
     return map {
         News(
             source = it.source,

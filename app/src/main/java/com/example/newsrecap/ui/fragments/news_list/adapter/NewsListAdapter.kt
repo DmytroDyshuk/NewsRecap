@@ -1,4 +1,4 @@
-package com.example.newsrecap.ui.adapter
+package com.example.newsrecap.ui.fragments.news_list.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

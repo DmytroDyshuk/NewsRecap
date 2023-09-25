@@ -1,6 +1,6 @@
 package com.example.newsrecap.network.model
 
-import com.example.newsrecap.database.model.DatabaseNews
+import com.example.newsrecap.database.model.DbNews
 import com.example.newsrecap.domain.model.News
 import com.squareup.moshi.JsonClass
 
@@ -29,8 +29,8 @@ fun NewsDto.asDomainModel(): News {
     )
 }
 
-fun NewsDto.asDatabaseModel(): DatabaseNews {
-    return DatabaseNews(
+fun NewsDto.asDatabaseModel(): DbNews {
+    return DbNews(
         source = this@asDatabaseModel.source?.asDomainModel(),
         author = this@asDatabaseModel.author,
         title = this@asDatabaseModel.title,

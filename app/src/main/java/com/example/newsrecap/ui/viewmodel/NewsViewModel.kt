@@ -1,7 +1,6 @@
 package com.example.newsrecap.ui.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +8,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.newsrecap.database.getDatabase
+import com.example.newsrecap.domain.model.News
 import com.example.newsrecap.repository.NewsRepository
+import com.example.newsrecap.utils.network.NetworkUtil
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -17,21 +18,28 @@ class NewsViewModel(application: Application): AndroidViewModel(application) {
 
     private val newsRepository = NewsRepository(getDatabase(application))
 
-    val newsList = newsRepository.news
+    private val _newsList = MutableLiveData<List<News>>()
+    val newsList: LiveData<List<News>> = _newsList
 
     private val _source = MutableLiveData<String>()
     val source: LiveData<String> = _source
 
     init {
-        refreshNewsFromRepository()
+        if (NetworkUtil.isInternetAvailable(application.applicationContext)) {
+            refreshNews()
+        } else {
+            newsRepository.news.observeForever {
+                _newsList.value = it
+            }
+        }
     }
 
-    private fun refreshNewsFromRepository() {
+    private fun refreshNews() {
         viewModelScope.launch {
             try {
-                newsRepository.refreshNews()
-            } catch (networkError: IOException) {
-                //TODO: add error if newsList is empty
+                _newsList.value = newsRepository.refreshNews()
+            } catch (e: IOException) {
+                e.printStackTrace()
             }
         }
     }
@@ -40,10 +48,10 @@ class NewsViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch {
             try {
                 source.value?.let {
-                    refreshNewsFromRepository()
+                    _newsList.value = newsRepository.getNewsBySource(it)
                 }
             } catch (e: Exception) {
-                Log.e("getNewsListError","e: ${e.message}")
+                e.printStackTrace()
             }
         }
     }
@@ -58,7 +66,8 @@ class NewsViewModel(application: Application): AndroidViewModel(application) {
                 @Suppress("UNCHECKED_CAST")
                 return NewsViewModel(app) as T
             }
-            throw IllegalArgumentException("Unable to construct viewmodel")
+            throw IllegalArgumentException("Unable to construct ViewModel")
         }
     }
+
 }

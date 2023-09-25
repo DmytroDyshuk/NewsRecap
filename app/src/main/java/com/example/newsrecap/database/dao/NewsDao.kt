@@ -5,13 +5,13 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.newsrecap.database.model.DatabaseNews
+import com.example.newsrecap.database.model.DbNews
 
 @Dao
 interface NewsDao {
-    @Query("SELECT * FROM DatabaseNews")
-    fun getNews(): LiveData<List<DatabaseNews>>
+    @Query("SELECT * FROM DbNews")
+    fun getNews(): LiveData<List<DbNews>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllNews(news: List<DatabaseNews>)
+    fun insertAllNews(news: List<DbNews>)
 }

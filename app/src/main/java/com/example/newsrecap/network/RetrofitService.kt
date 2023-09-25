@@ -1,6 +1,6 @@
 package com.example.newsrecap.network
 
-import com.example.newsrecap.utils.Constants.BASE_URL
+import com.example.newsrecap.utils.constants.Constants.BASE_URL
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit

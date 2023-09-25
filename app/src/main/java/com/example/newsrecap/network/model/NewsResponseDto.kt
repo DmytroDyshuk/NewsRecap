@@ -18,11 +18,3 @@ fun NewsResponseDto.asDomainModel(): NewsResponse {
         articles = articles.map { it.asDomainModel()  }
     )
 }
-
-//fun NewsResponseDto.asDatabaseModel(): DatabaseNewsResponse {
-//    return DatabaseNewsResponse(
-//        status = status,
-//        totalResults = totalResults,
-//        articles = articles.map { it.asDatabaseModel() }
-//    )
-//}

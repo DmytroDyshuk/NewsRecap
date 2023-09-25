@@ -7,9 +7,9 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.newsrecap.database.converter.SourceConverter
 import com.example.newsrecap.database.dao.NewsDao
-import com.example.newsrecap.database.model.DatabaseNews
+import com.example.newsrecap.database.model.DbNews
 
-@Database(entities = [DatabaseNews::class], version = 5)
+@Database(entities = [DbNews::class], version = 6)
 @TypeConverters(SourceConverter::class)
 abstract class NewsDatabase: RoomDatabase() {
     abstract val newsDao: NewsDao

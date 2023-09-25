@@ -6,7 +6,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
 import com.example.newsrecap.databinding.ActivityMainBinding
 import com.example.newsrecap.ui.viewmodel.NewsViewModel
-import com.example.newsrecap.utils.SourcesConstants
+import com.example.newsrecap.utils.constants.SourcesConstants
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.example.newsrecap.utils
+package com.example.newsrecap.utils.constants
 
 object SourcesConstants {
     const val TIME = "time"

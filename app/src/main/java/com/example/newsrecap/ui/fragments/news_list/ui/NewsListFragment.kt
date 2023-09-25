@@ -1,4 +1,4 @@
-package com.example.newsrecap.ui.fragments
+package com.example.newsrecap.ui.fragments.news_list.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsrecap.databinding.FragmentNewsListBinding
-import com.example.newsrecap.ui.adapter.NewsListAdapter
+import com.example.newsrecap.ui.fragments.news_list.adapter.NewsListAdapter
 import com.example.newsrecap.ui.viewmodel.NewsViewModel
 
 class NewsListFragment: Fragment() {
@@ -18,7 +18,7 @@ class NewsListFragment: Fragment() {
 
     private val viewModel: NewsViewModel by lazy {
         val activity = requireNotNull(this.activity)
-        ViewModelProvider(this, NewsViewModel.Factory(activity.application))[NewsViewModel::class.java]
+        ViewModelProvider(activity, NewsViewModel.Factory(activity.application))[NewsViewModel::class.java]
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
