@@ -11,7 +11,7 @@ import com.example.newsrecap.R
 import com.example.newsrecap.databinding.FragmentNewsDetailsBinding
 import com.example.newsrecap.domain.model.News
 import com.example.newsrecap.ui.viewmodel.NewsViewModel
-import com.example.newsrecap.utils.parseTime
+import com.example.newsrecap.utils.parseDate
 
 class NewsDetailsFragment : Fragment() {
 
@@ -46,7 +46,7 @@ class NewsDetailsFragment : Fragment() {
         binding.tvNewsSource.text = news.source?.name
         binding.tvNewsPublisher.text = "Author: ${news.author}"
         binding.tvNewsText.text = news.content
-        binding.tvNewsTime.text = news.publishedAt?.parseTime()
+        binding.tvNewsTime.text = news.publishedAt?.parseDate()
     }
 
     private fun setNewsImage(url: String?) {

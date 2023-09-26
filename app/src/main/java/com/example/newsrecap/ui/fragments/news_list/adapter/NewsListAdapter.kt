@@ -2,7 +2,6 @@ package com.example.newsrecap.ui.fragments.news_list.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,9 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.newsrecap.R
 import com.example.newsrecap.databinding.ListItemNewsBinding
 import com.example.newsrecap.domain.model.News
-import com.example.newsrecap.utils.parseTime
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.newsrecap.utils.parseDate
 
 class NewsListAdapter(private val onNewsClicked: (News) -> Unit)
     : ListAdapter<News, NewsListAdapter.NewsViewHolder>(DiffCallback) {
@@ -42,7 +39,7 @@ class NewsListAdapter(private val onNewsClicked: (News) -> Unit)
                 tvNewsTitle.text = news.title
                 tvNewsDescription.text = news.description
                 tvMediaTitle.text = news.source?.name
-                tvNewsTime.text = news.publishedAt?.parseTime()
+                tvNewsTime.text = news.publishedAt?.parseDate()
 
                 mcvNewsItem.setOnClickListener {
                     onNewsClicked.invoke(news)
