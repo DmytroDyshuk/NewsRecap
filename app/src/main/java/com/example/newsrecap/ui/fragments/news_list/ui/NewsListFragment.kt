@@ -1,6 +1,5 @@
 package com.example.newsrecap.ui.fragments.news_list.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -70,63 +69,50 @@ class NewsListFragment: Fragment() {
         binding.nvNews.setNavigationItemSelectedListener {
             when(it.itemId) {
                 R.id.item_wsj -> {
-                    viewModel.setNewSource(SourcesConstants.THE_WALL_STREET_JOURNAL)
-                    binding.toolbar.title = getString(R.string.wsj_news)
-                    //supportActionBar?.title = getString(R.string.wsj_news)
-                    binding.drawerLayout.close()
+                    setupNewsSource(SourcesConstants.THE_WALL_STREET_JOURNAL, getString(R.string.wsj_news))
                     true
                 }
                 R.id.item_washington_post -> {
-                    viewModel.setNewSource(SourcesConstants.THE_WASHINGTON_POST)
-                    binding.toolbar.title = getString(R.string.the_washington_post)
-                    binding.drawerLayout.close()
+                    setupNewsSource(SourcesConstants.THE_WASHINGTON_POST, getString(R.string.the_washington_post))
                     true
                 }
                 R.id.item_time -> {
-                    viewModel.setNewSource(SourcesConstants.TIME)
-                    binding.toolbar.title = getString(R.string.time)
-                    binding.drawerLayout.close()
+                    setupNewsSource(SourcesConstants.TIME, getString(R.string.time))
                     true
                 }
                 R.id.item_bbc -> {
-                    viewModel.setNewSource(SourcesConstants.BBC_NEWS)
-                    binding.toolbar.title = getString(R.string.bbc_news)
-                    binding.drawerLayout.close()
+                    setupNewsSource(SourcesConstants.BBC_NEWS, getString(R.string.bbc_news))
                     true
                 }
                 R.id.item_abc_news -> {
-                    viewModel.setNewSource(SourcesConstants.ABC_NEWS)
-                    binding.toolbar.title = getString(R.string.abc_news)
-                    binding.drawerLayout.close()
+                    setupNewsSource(SourcesConstants.ABC_NEWS, getString(R.string.abc_news))
                     true
                 }
                 R.id.item_cnn_news -> {
-                    viewModel.setNewSource(SourcesConstants.CNN_NEWS)
-                    binding.toolbar.title = getString(R.string.cnn_news)
-                    binding.drawerLayout.close()
+                    setupNewsSource(SourcesConstants.CNN_NEWS, getString(R.string.cnn_news))
                     true
                 }
                 R.id.item_fox_news -> {
-                    viewModel.setNewSource(SourcesConstants.FOX_NEWS)
-                    binding.toolbar.title = getString(R.string.fox_news)
-                    binding.drawerLayout.close()
+                    setupNewsSource(SourcesConstants.FOX_NEWS, getString(R.string.fox_news))
                     true
                 }
                 R.id.item_ign_news -> {
-                    viewModel.setNewSource(SourcesConstants.IGN)
-                    binding.toolbar.title = getString(R.string.ign)
-                    binding.drawerLayout.close()
+                    setupNewsSource(SourcesConstants.IGN, getString(R.string.ign))
                     true
                 }
                 R.id.item_national_geographic -> {
-                    viewModel.setNewSource(SourcesConstants.NATIONAL_GEOGRAPHIC)
-                    binding.toolbar.title = getString(R.string.national_geographic)
-                    binding.drawerLayout.close()
+                    setupNewsSource(SourcesConstants.NATIONAL_GEOGRAPHIC, getString(R.string.national_geographic))
                     true
                 }
                 else -> false
             }
         }
+    }
+
+    private fun setupNewsSource(source: String, newsTitle: String) {
+        viewModel.setNewSource(source)
+        binding.toolbar.title = newsTitle
+        binding.drawerLayout.close()
     }
 
 }
