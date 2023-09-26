@@ -5,52 +5,55 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.newsrecap.R
+import com.example.newsrecap.databinding.FragmentNewsDetailsBinding
+import com.example.newsrecap.domain.model.News
+import com.example.newsrecap.ui.viewmodel.NewsViewModel
+import com.example.newsrecap.utils.parseTime
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [NewsDetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class NewsDetailsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private var _binding: FragmentNewsDetailsBinding? = null
+    private val binding get() = _binding!!
+
+    private val viewModel: NewsViewModel by lazy {
+        val activity = requireNotNull(this.activity)
+        ViewModelProvider(activity, NewsViewModel.Factory(activity.application))[NewsViewModel::class.java]
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_news_details, container, false)
+        _binding = FragmentNewsDetailsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment NewsDetailsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) = NewsDetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.selectedNews.observe(viewLifecycleOwner) { news ->
+            setSelectedNews(news)
+        }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun setSelectedNews(news: News) {
+        setNewsImage(news.urlToImage)
+        binding.tvNewsTitle.text = news.title
+        binding.tvNewsSource.text = news.source?.name
+        binding.tvNewsPublisher.text = "Author: ${news.author}"
+        binding.tvNewsText.text = news.content
+        binding.tvNewsTime.text = news.publishedAt?.parseTime()
+    }
+
+    private fun setNewsImage(url: String?) {
+        Glide.with(binding.ivNewsImage)
+            .load(url)
+            .error(R.drawable.vector_broken_image)
+            .into(binding.ivNewsImage)
+    }
+
 }

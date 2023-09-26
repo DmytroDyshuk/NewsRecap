@@ -19,11 +19,6 @@
         android:id="@+id/newsDetailsFragment"
         android:name="com.example.newsrecap.ui.fragments.news_details.ui.NewsDetailsFragment"
         android:label="fragment_news_details"
-        tools:layout="@layout/fragment_news_details" >
-        <argument
-            android:name="title"
-            app:argType="string"
-            app:nullable="true" />
-    </fragment>
+        tools:layout="@layout/fragment_news_details" />
 
 </navigation>

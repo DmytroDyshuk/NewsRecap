@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Handle the splash screen transition.
         installSplashScreen()
 
         super.onCreate(savedInstanceState)

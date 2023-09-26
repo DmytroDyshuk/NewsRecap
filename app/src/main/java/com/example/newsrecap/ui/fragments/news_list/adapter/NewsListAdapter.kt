@@ -10,14 +10,16 @@ import com.bumptech.glide.Glide
 import com.example.newsrecap.R
 import com.example.newsrecap.databinding.ListItemNewsBinding
 import com.example.newsrecap.domain.model.News
+import com.example.newsrecap.utils.parseTime
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NewsListAdapter: ListAdapter<News, NewsListAdapter.NewsViewHolder>(DiffCallback) {
+class NewsListAdapter(private val onNewsClicked: (News) -> Unit)
+    : ListAdapter<News, NewsListAdapter.NewsViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return NewsViewHolder(ListItemNewsBinding.inflate(layoutInflater, parent, false))
+        return NewsViewHolder(ListItemNewsBinding.inflate(layoutInflater, parent, false), onNewsClicked)
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
@@ -25,7 +27,8 @@ class NewsListAdapter: ListAdapter<News, NewsListAdapter.NewsViewHolder>(DiffCal
         holder.bind(news)
     }
 
-    class NewsViewHolder(private val binding: ListItemNewsBinding): RecyclerView.ViewHolder(binding.root) {
+    class NewsViewHolder(private val binding: ListItemNewsBinding,
+                         private val onNewsClicked: (News) -> Unit) : RecyclerView.ViewHolder(binding.root) {
         fun bind(news: News) {
             binding.apply {
                 news.urlToImage?.let {
@@ -39,23 +42,12 @@ class NewsListAdapter: ListAdapter<News, NewsListAdapter.NewsViewHolder>(DiffCal
                 tvNewsTitle.text = news.title
                 tvNewsDescription.text = news.description
                 tvMediaTitle.text = news.source?.name
+                tvNewsTime.text = news.publishedAt?.parseTime()
 
-                news.publishedAt?.let {
-                    try {
-                        parseTime(it, "yyyy-MM-dd'T'HH:mm:ss'Z'", tvNewsTime)
-                    } catch (e: Exception) {
-                        parseTime(it, "yyyy-MM-dd'T'HH:mm:ss.SSSSSSS'Z'", tvNewsTime)
-                    }
+                mcvNewsItem.setOnClickListener {
+                    onNewsClicked.invoke(news)
                 }
             }
-        }
-
-        private fun parseTime(publishedAt: String, format: String, view: TextView) {
-            val inputFormat = SimpleDateFormat(format, Locale.getDefault())
-            val outputFormat = SimpleDateFormat("HH:mm | dd.MM", Locale.getDefault())
-            val date = inputFormat.parse(publishedAt)
-            val output = date?.let { outputFormat.format(it) }
-            view.text = output
         }
     }
 
@@ -68,4 +60,5 @@ class NewsListAdapter: ListAdapter<News, NewsListAdapter.NewsViewHolder>(DiffCal
             return oldItem == newItem
         }
     }
+
 }

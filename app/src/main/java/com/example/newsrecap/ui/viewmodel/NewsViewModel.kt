@@ -24,6 +24,9 @@ class NewsViewModel(application: Application): AndroidViewModel(application) {
     private val _source = MutableLiveData<String>()
     val source: LiveData<String> = _source
 
+    private val _selectedNews = MutableLiveData<News>()
+    val selectedNews: LiveData<News> = _selectedNews
+
     init {
         if (NetworkUtil.isInternetAvailable(application.applicationContext)) {
             refreshNews()
@@ -58,6 +61,10 @@ class NewsViewModel(application: Application): AndroidViewModel(application) {
 
     fun setNewSource(source: String) {
         _source.value = source
+    }
+
+    fun setSelectedNews(news: News) {
+        _selectedNews.value = news
     }
 
     class Factory(val app: Application): ViewModelProvider.Factory {
