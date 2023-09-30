@@ -39,7 +39,7 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="?attr/colorPrimary"/>
+                    android:background="?attr/colorPrimary" />
 
             </LinearLayout>
 
@@ -73,6 +73,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        app:itemTextColor="@color/drawer_item_text_color"
+        app:itemBackground="@color/drawer_item_color"
         app:headerLayout="@layout/header_navigation_drawer"
         app:menu="@menu/navigation_drawer"/>
 

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">NewsRecap</string>
 
+    <string name="all_news">All News</string>
     <string name="wsj_news">The Wall Street Journal</string>
     <string name="the_washington_post">The Washington Post</string>
     <string name="time">Time</string>
@@ -10,6 +11,4 @@
     <string name="fox_news">Fox News</string>
     <string name="ign">IGN</string>
     <string name="national_geographic">National Geographic</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

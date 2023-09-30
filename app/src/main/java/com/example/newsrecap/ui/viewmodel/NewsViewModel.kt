@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.newsrecap.R
 import com.example.newsrecap.database.getDatabase
 import com.example.newsrecap.domain.model.News
 import com.example.newsrecap.repository.NewsRepository
@@ -27,6 +28,11 @@ class NewsViewModel(application: Application): AndroidViewModel(application) {
     private val _selectedNews = MutableLiveData<News>()
     val selectedNews: LiveData<News> = _selectedNews
 
+    private val _newsTitle = MutableLiveData<String>().apply {
+        value = application.getString(R.string.all_news)
+    }
+    val newsTitle: LiveData<String> = _newsTitle
+
     init {
         if (NetworkUtil.isInternetAvailable(application.applicationContext)) {
             refreshNews()
@@ -37,7 +43,7 @@ class NewsViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    private fun refreshNews() {
+    fun refreshNews() {
         viewModelScope.launch {
             try {
                 _newsList.value = newsRepository.refreshNews()
@@ -65,6 +71,10 @@ class NewsViewModel(application: Application): AndroidViewModel(application) {
 
     fun setSelectedNews(news: News) {
         _selectedNews.value = news
+    }
+
+    fun setNewsTitle(title: String) {
+        _newsTitle.value = title
     }
 
     class Factory(val app: Application): ViewModelProvider.Factory {

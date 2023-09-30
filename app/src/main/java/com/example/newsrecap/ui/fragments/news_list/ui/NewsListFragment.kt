@@ -52,6 +52,10 @@ class NewsListFragment: Fragment() {
             adapter.submitList(newsList)
             binding.ivLoadingAnimation.visibility = View.INVISIBLE
         }
+
+        viewModel.newsTitle.observe(viewLifecycleOwner) { newsTitle ->
+            binding.toolbar.title = newsTitle
+        }
     }
 
     override fun onDestroyView() {
@@ -68,6 +72,12 @@ class NewsListFragment: Fragment() {
     private fun setAppBarLayout() {
         binding.nvNews.setNavigationItemSelectedListener {
             when(it.itemId) {
+                R.id.item_all_news -> {
+                    viewModel.refreshNews()
+                    viewModel.setNewsTitle(getString(R.string.all_news))
+                    binding.drawerLayout.close()
+                    true
+                }
                 R.id.item_wsj -> {
                     setupNewsSource(SourcesConstants.THE_WALL_STREET_JOURNAL, getString(R.string.wsj_news))
                     true
@@ -111,7 +121,7 @@ class NewsListFragment: Fragment() {
 
     private fun setupNewsSource(source: String, newsTitle: String) {
         viewModel.setNewSource(source)
-        binding.toolbar.title = newsTitle
+        viewModel.setNewsTitle(newsTitle)
         binding.drawerLayout.close()
     }
 
