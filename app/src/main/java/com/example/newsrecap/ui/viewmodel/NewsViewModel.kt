@@ -77,7 +77,7 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
         _newsTitle.value = title
     }
 
-    class Factory(val app: Application): ViewModelProvider.Factory {
+    class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(NewsViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")

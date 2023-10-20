@@ -11,8 +11,8 @@ import com.example.newsrecap.databinding.ListItemNewsBinding
 import com.example.newsrecap.domain.model.News
 import com.example.newsrecap.utils.parseDate
 
-class NewsListAdapter(private val onNewsClicked: (News) -> Unit)
-    : ListAdapter<News, NewsListAdapter.NewsViewHolder>(DiffCallback) {
+class NewsListAdapter(private val onNewsClicked: (News) -> Unit) :
+    ListAdapter<News, NewsListAdapter.NewsViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -24,8 +24,10 @@ class NewsListAdapter(private val onNewsClicked: (News) -> Unit)
         holder.bind(news)
     }
 
-    class NewsViewHolder(private val binding: ListItemNewsBinding,
-                         private val onNewsClicked: (News) -> Unit) : RecyclerView.ViewHolder(binding.root) {
+    class NewsViewHolder(
+        private val binding: ListItemNewsBinding,
+        private val onNewsClicked: (News) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(news: News) {
             binding.apply {
                 news.urlToImage?.let {

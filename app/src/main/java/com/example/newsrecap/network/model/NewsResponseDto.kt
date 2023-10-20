@@ -15,6 +15,6 @@ fun NewsResponseDto.asDomainModel(): NewsResponse {
     return NewsResponse(
         status = status,
         totalResults = totalResults,
-        articles = articles.map { it.asDomainModel()  }
+        articles = articles.map { it.asDomainModel() }
     )
 }

@@ -11,7 +11,7 @@ import com.example.newsrecap.database.model.DbNews
 
 @Database(entities = [DbNews::class], version = 6)
 @TypeConverters(SourceConverter::class)
-abstract class NewsDatabase: RoomDatabase() {
+abstract class NewsDatabase : RoomDatabase() {
     abstract val newsDao: NewsDao
 }
 
