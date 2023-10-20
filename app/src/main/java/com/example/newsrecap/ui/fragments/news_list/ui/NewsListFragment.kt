@@ -50,7 +50,7 @@ class NewsListFragment: Fragment() {
 
         viewModel.newsList.observe(viewLifecycleOwner) { newsList ->
             adapter.submitList(newsList)
-            binding.ivLoadingAnimation.visibility = View.INVISIBLE
+            binding.ivLoadingAnimation.visibility = View.GONE
         }
 
         viewModel.newsTitle.observe(viewLifecycleOwner) { newsTitle ->

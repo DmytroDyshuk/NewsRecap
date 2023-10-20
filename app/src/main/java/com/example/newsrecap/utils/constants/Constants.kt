@@ -1,7 +1,5 @@
 package com.example.newsrecap.utils.constants
 
-import kotlin.reflect.jvm.internal.impl.renderer.DescriptorRenderer.ValueParametersHandler.DEFAULT
-
 object Constants {
     const val BASE_URL = "https://newsapi.org/v2/"
 

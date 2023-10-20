@@ -15,7 +15,7 @@ import com.example.newsrecap.utils.network.NetworkUtil
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-class NewsViewModel(application: Application): AndroidViewModel(application) {
+class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val newsRepository = NewsRepository(getDatabase(application))
 
