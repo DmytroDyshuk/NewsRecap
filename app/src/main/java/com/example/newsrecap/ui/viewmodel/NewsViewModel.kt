@@ -8,9 +8,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.newsrecap.R
-import com.example.newsrecap.database.getDatabase
+import com.example.newsrecap.data.database.getDatabase
 import com.example.newsrecap.domain.model.News
-import com.example.newsrecap.repository.NewsRepository
+import com.example.newsrecap.data.repositories.NewsRepository
 import com.example.newsrecap.utils.network.NetworkUtil
 import kotlinx.coroutines.launch
 import java.io.IOException

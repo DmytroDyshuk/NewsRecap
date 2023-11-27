@@ -1,4 +1,4 @@
-package com.example.newsrecap.ui.fragments.news_list.ui
+package com.example.newsrecap.ui.fragments.news_list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsrecap.R
 import com.example.newsrecap.databinding.FragmentNewsListBinding
-import com.example.newsrecap.ui.fragments.news_list.adapter.NewsListAdapter
+import com.example.newsrecap.ui.adapters.NewsListAdapter
 import com.example.newsrecap.ui.viewmodel.NewsViewModel
 import com.example.newsrecap.utils.constants.SourcesConstants
 

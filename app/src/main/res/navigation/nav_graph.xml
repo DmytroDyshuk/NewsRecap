@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/newsListFragment"
-        android:name="com.example.newsrecap.ui.fragments.news_list.ui.NewsListFragment"
+        android:name="com.example.newsrecap.ui.fragments.news_list.NewsListFragment"
         android:label="fragment_news_list"
         tools:layout="@layout/fragment_news_list" >
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/newsDetailsFragment"
-        android:name="com.example.newsrecap.ui.fragments.news_details.ui.NewsDetailsFragment"
+        android:name="com.example.newsrecap.ui.fragments.news_details.NewsDetailsFragment"
         android:label="fragment_news_details"
         tools:layout="@layout/fragment_news_details" />
 

@@ -1,4 +1,4 @@
-package com.example.newsrecap.network
+package com.example.newsrecap.data.network
 
 import com.example.newsrecap.utils.constants.Constants.BASE_URL
 import com.squareup.moshi.Moshi

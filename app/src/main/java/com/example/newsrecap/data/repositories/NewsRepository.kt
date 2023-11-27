@@ -1,14 +1,14 @@
-package com.example.newsrecap.repository
+package com.example.newsrecap.data.repositories
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.example.newsrecap.BuildConfig
-import com.example.newsrecap.database.NewsDatabase
-import com.example.newsrecap.database.model.asDomainModel
+import com.example.newsrecap.data.database.NewsDatabase
+import com.example.newsrecap.data.database.model.asDomainModel
 import com.example.newsrecap.domain.model.News
-import com.example.newsrecap.network.RetrofitService
-import com.example.newsrecap.network.model.asDatabaseModel
-import com.example.newsrecap.network.model.asDomainModel
+import com.example.newsrecap.data.network.RetrofitService
+import com.example.newsrecap.data.network.model.asDatabaseModel
+import com.example.newsrecap.data.network.model.asDomainModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -25,7 +25,8 @@ class NewsRepository(private val newsDatabase: NewsDatabase) {
     }
 
     suspend fun getNewsBySource(source: String): List<News> = withContext(Dispatchers.IO) {
-        return@withContext RetrofitService.newsApiService.getNews(source, BuildConfig.MY_API_KEY).asDomainModel().articles
+        return@withContext RetrofitService.newsApiService.getNews(source, BuildConfig.MY_API_KEY)
+            .asDomainModel().articles
     }
 
 }

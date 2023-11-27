@@ -1,4 +1,4 @@
-package com.example.newsrecap.database.converter
+package com.example.newsrecap.data.database.converter
 
 import androidx.room.TypeConverter
 import com.example.newsrecap.domain.model.Source

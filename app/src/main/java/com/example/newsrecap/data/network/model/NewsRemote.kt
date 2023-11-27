@@ -1,6 +1,6 @@
-package com.example.newsrecap.network.model
+package com.example.newsrecap.data.network.model
 
-import com.example.newsrecap.database.model.DbNews
+import com.example.newsrecap.data.database.model.DbNews
 import com.example.newsrecap.domain.model.News
 import com.squareup.moshi.JsonClass
 
