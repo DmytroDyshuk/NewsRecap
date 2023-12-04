@@ -12,7 +12,7 @@ import com.example.newsrecap.data.network.RetrofitService
 import com.example.newsrecap.domain.model.News
 import com.example.newsrecap.data.repositories.NewsRepository
 import com.example.newsrecap.ui.ui_states.NewsUiState
-import com.example.newsrecap.utils.network.NetworkUtil
+import com.example.newsrecap.utils.connectivity_observer.NetworkUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

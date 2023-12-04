@@ -1,4 +1,4 @@
-package com.example.newsrecap.utils.network
+package com.example.newsrecap.utils.connectivity_observer
 
 import android.content.Context
 import android.net.ConnectivityManager
