@@ -4,8 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsrecap.R
@@ -13,6 +17,9 @@ import com.example.newsrecap.databinding.FragmentNewsListBinding
 import com.example.newsrecap.ui.adapters.NewsListAdapter
 import com.example.newsrecap.ui.viewmodel.NewsViewModel
 import com.example.newsrecap.utils.constants.SourcesConstants
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 class NewsListFragment : Fragment() {
 
@@ -34,8 +41,6 @@ class NewsListFragment : Fragment() {
         setAppBarLayout()
         setupCLickListeners()
 
-        binding.ivLoadingAnimation.visibility = View.VISIBLE
-
         val adapter = NewsListAdapter(onNewsClicked = {
             viewModel.setSelectedNews(it)
             NavHostFragment.findNavController(this).navigate(R.id.action_newsListFragment_to_newsDetailsFragment)
@@ -44,17 +49,27 @@ class NewsListFragment : Fragment() {
         binding.rvNewsList.layoutManager = LinearLayoutManager(requireContext())
         binding.rvNewsList.adapter = adapter
 
-        viewModel.source.observe(viewLifecycleOwner) {
-            viewModel.getNewsList()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState
+                    .map { it.source }
+                    .distinctUntilChanged()
+                    .collect { source ->
+                        if (source.isNotBlank()) {
+                            viewModel.getNewsListBySource(source)
+                        }
+                    }
+            }
         }
 
-        viewModel.newsList.observe(viewLifecycleOwner) { newsList ->
-            adapter.submitList(newsList)
-            binding.ivLoadingAnimation.visibility = View.GONE
-        }
-
-        viewModel.newsTitle.observe(viewLifecycleOwner) { newsTitle ->
-            binding.toolbar.title = newsTitle
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { uiState ->
+                    adapter.submitList(uiState.newsList)
+                    binding.toolbar.title = uiState.newsTitle
+                    binding.ivLoadingAnimation.isVisible = uiState.isLoading
+                }
+            }
         }
     }
 
@@ -73,9 +88,7 @@ class NewsListFragment : Fragment() {
         binding.nvNews.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.item_all_news -> {
-                    viewModel.refreshNews()
-                    viewModel.setNewsTitle(getString(R.string.all_news))
-                    binding.drawerLayout.close()
+                    setupAllNews()
                     true
                 }
 
@@ -127,6 +140,12 @@ class NewsListFragment : Fragment() {
                 else -> false
             }
         }
+    }
+
+    private fun setupAllNews() {
+        viewModel.refreshNews()
+        viewModel.setNewsTitle(getString(R.string.all_news))
+        binding.drawerLayout.close()
     }
 
     private fun setupNewsSource(source: String, newsTitle: String) {
