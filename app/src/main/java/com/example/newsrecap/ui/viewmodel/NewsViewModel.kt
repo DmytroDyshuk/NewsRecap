@@ -12,7 +12,6 @@ import com.example.newsrecap.data.network.RetrofitService
 import com.example.newsrecap.domain.model.News
 import com.example.newsrecap.data.repositories.NewsRepository
 import com.example.newsrecap.ui.ui_states.NewsUiState
-import com.example.newsrecap.utils.connectivity_observer.NetworkUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -36,11 +35,7 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     val selectedNews: LiveData<News> = _selectedNews
 
     init {
-        if (NetworkUtil.isInternetAvailable(application.applicationContext)) {
-            refreshNews()
-        } else {
-            getLocalNews()
-        }
+        refreshNews()
     }
 
     fun refreshNews() {

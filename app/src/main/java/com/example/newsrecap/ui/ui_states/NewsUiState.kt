@@ -9,5 +9,5 @@ data class NewsUiState(
     val newsTitle: String = "All News",
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
-    val networkStatus: ConnectivityObserver.Status = ConnectivityObserver.Status.Unavailable
+    val networkStatus: ConnectivityObserver.Status = ConnectivityObserver.Status.Available
 )
