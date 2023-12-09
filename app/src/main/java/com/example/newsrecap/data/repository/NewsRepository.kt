@@ -1,11 +1,11 @@
-package com.example.newsrecap.data.repositories
+package com.example.newsrecap.data.repository
 
-import com.example.newsrecap.data.database.NewsDatabase
-import com.example.newsrecap.data.database.model.asDomainModel
+import com.example.newsrecap.data.local.NewsDatabase
+import com.example.newsrecap.data.local.entities.asDomainModel
 import com.example.newsrecap.data.network.NewsApiService
 import com.example.newsrecap.domain.model.News
-import com.example.newsrecap.data.network.model.asDatabaseModel
-import com.example.newsrecap.data.network.model.asDomainModel
+import com.example.newsrecap.data.network.models.asEntity
+import com.example.newsrecap.data.network.models.asDomainModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -23,7 +23,7 @@ class NewsRepository(
 
     suspend fun refreshNews(): List<News> = withContext(ioDispatcher) {
         val news = newsApi.getEverythingNews()
-        newsDatabase.newsDao.insertAllNews(news.articles.map { it.asDatabaseModel() })
+        newsDatabase.newsDao.insertAllNews(news.articles.map { it.asEntity() })
         return@withContext news.articles.map { it.asDomainModel() }
     }
 

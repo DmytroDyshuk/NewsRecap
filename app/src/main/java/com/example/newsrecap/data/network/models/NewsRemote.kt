@@ -1,11 +1,11 @@
-package com.example.newsrecap.data.network.model
+package com.example.newsrecap.data.network.models
 
-import com.example.newsrecap.data.database.model.DbNews
+import com.example.newsrecap.data.local.entities.NewsEntity
 import com.example.newsrecap.domain.model.News
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class NewsDto(
+data class NewsRemote(
     val source: SourceDto?,
     val author: String?,
     val title: String?,
@@ -16,7 +16,7 @@ data class NewsDto(
     val content: String?
 )
 
-fun NewsDto.asDomainModel(): News {
+fun NewsRemote.asDomainModel(): News {
     return News(
         source = this@asDomainModel.source?.asDomainModel(),
         author = this@asDomainModel.author,
@@ -29,15 +29,15 @@ fun NewsDto.asDomainModel(): News {
     )
 }
 
-fun NewsDto.asDatabaseModel(): DbNews {
-    return DbNews(
-        source = this@asDatabaseModel.source?.asDomainModel(),
-        author = this@asDatabaseModel.author,
-        title = this@asDatabaseModel.title,
-        description = this@asDatabaseModel.description,
-        url = this@asDatabaseModel.url,
-        urlToImage = this@asDatabaseModel.urlToImage,
-        publishedAt = this@asDatabaseModel.publishedAt,
-        content = this@asDatabaseModel.content
+fun NewsRemote.asEntity(): NewsEntity {
+    return NewsEntity(
+        source = this@asEntity.source?.asDomainModel(),
+        author = this@asEntity.author,
+        title = this@asEntity.title,
+        description = this@asEntity.description,
+        url = this@asEntity.url,
+        urlToImage = this@asEntity.urlToImage,
+        publishedAt = this@asEntity.publishedAt,
+        content = this@asEntity.content
     )
 }

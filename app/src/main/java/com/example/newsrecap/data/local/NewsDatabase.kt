@@ -1,15 +1,15 @@
-package com.example.newsrecap.data.database
+package com.example.newsrecap.data.local
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.newsrecap.data.database.converter.SourceConverter
-import com.example.newsrecap.data.database.dao.NewsDao
-import com.example.newsrecap.data.database.model.DbNews
+import com.example.newsrecap.data.local.converter.SourceConverter
+import com.example.newsrecap.data.local.dao.NewsDao
+import com.example.newsrecap.data.local.entities.NewsEntity
 
-@Database(entities = [DbNews::class], version = 6)
+@Database(entities = [NewsEntity::class], version = 6)
 @TypeConverters(SourceConverter::class)
 abstract class NewsDatabase : RoomDatabase() {
     abstract val newsDao: NewsDao

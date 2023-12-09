@@ -1,4 +1,4 @@
-package com.example.newsrecap.data.database.model
+package com.example.newsrecap.data.local.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -6,7 +6,7 @@ import com.example.newsrecap.domain.model.News
 import com.example.newsrecap.domain.model.Source
 
 @Entity
-data class DbNews constructor(
+data class NewsEntity constructor(
     @PrimaryKey(autoGenerate = true)
     var primaryKey: Int = 0,
     val source: Source?,
@@ -19,7 +19,7 @@ data class DbNews constructor(
     val content: String?
 )
 
-fun List<DbNews>.asDomainModel(): List<News> {
+fun List<NewsEntity>.asDomainModel(): List<News> {
     return map {
         News(
             source = it.source,

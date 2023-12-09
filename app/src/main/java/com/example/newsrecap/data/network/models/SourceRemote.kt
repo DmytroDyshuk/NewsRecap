@@ -1,4 +1,4 @@
-package com.example.newsrecap.data.network.model
+package com.example.newsrecap.data.network.models
 
 import com.example.newsrecap.domain.model.Source
 import com.squareup.moshi.JsonClass

@@ -7,10 +7,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.newsrecap.data.database.getDatabase
+import com.example.newsrecap.data.local.getDatabase
 import com.example.newsrecap.data.network.RetrofitService
 import com.example.newsrecap.domain.model.News
-import com.example.newsrecap.data.repositories.NewsRepository
+import com.example.newsrecap.data.repository.NewsRepository
 import com.example.newsrecap.ui.ui_states.NewsUiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
