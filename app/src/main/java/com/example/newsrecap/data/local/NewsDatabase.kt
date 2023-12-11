@@ -9,7 +9,7 @@ import com.example.newsrecap.data.local.converter.SourceConverter
 import com.example.newsrecap.data.local.dao.NewsDao
 import com.example.newsrecap.data.local.entities.NewsEntity
 
-@Database(entities = [NewsEntity::class], version = 6)
+@Database(entities = [NewsEntity::class], version = 7)
 @TypeConverters(SourceConverter::class)
 abstract class NewsDatabase : RoomDatabase() {
     abstract val newsDao: NewsDao

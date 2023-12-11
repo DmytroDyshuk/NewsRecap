@@ -30,8 +30,6 @@ class NewsDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupClickListeners()
-
         viewModel.selectedNews.observe(viewLifecycleOwner) { news ->
             setSelectedNews(news)
         }
@@ -40,12 +38,6 @@ class NewsDetailsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun setupClickListeners() {
-        binding.ivBack.setOnClickListener {
-            activity?.supportFragmentManager?.popBackStack()
-        }
     }
 
     private fun setSelectedNews(news: News) {
