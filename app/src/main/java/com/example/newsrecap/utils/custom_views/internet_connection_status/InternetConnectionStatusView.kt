@@ -24,16 +24,27 @@ class InternetConnectionStatusView @JvmOverloads constructor(
         ViewInternentConnectionStatusBinding.inflate(LayoutInflater.from(context), this, true)
 
     fun updateViewWithConnectStatus(status: ConnectivityObserver.Status) {
-        if (status == ConnectivityObserver.Status.Lost) {
-            setTextMessage(ContextCompat.getString(context, R.string.connection_lost))
-            setViewBackgroundColor(ContextCompat.getColor(context, R.color.red))
-            setTextColor(ContextCompat.getColor(context, R.color.black))
-            showView()
-        } else {
-            setTextMessage(ContextCompat.getString(context, R.string.connection_restored))
-            setViewBackgroundColor(ContextCompat.getColor(context, R.color.green))
-            setTextColor(ContextCompat.getColor(context, R.color.white))
-            hideView()
+        when (status) {
+            ConnectivityObserver.Status.Lost -> {
+                setTextMessage(ContextCompat.getString(context, R.string.connection_lost))
+                setViewBackgroundColor(ContextCompat.getColor(context, R.color.red))
+                setTextColor(ContextCompat.getColor(context, R.color.black))
+                showView()
+            }
+
+            ConnectivityObserver.Status.Unavailable -> {
+                setTextMessage(ContextCompat.getString(context, R.string.connection_unavailable))
+                setViewBackgroundColor(ContextCompat.getColor(context, R.color.red))
+                setTextColor(ContextCompat.getColor(context, R.color.black))
+                showView()
+            }
+
+            else -> {
+                setTextMessage(ContextCompat.getString(context, R.string.connection_restored))
+                setViewBackgroundColor(ContextCompat.getColor(context, R.color.green))
+                setTextColor(ContextCompat.getColor(context, R.color.white))
+                hideView()
+            }
         }
     }
 

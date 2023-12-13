@@ -13,6 +13,7 @@
     <string name="national_geographic">National Geographic</string>
 
     <!--    View Internet connection status-->
+    <string name="connection_unavailable">Internet connection unavailable</string>
     <string name="connection_lost">Internet connection lost</string>
     <string name="connection_restored">Connection restored</string>
 

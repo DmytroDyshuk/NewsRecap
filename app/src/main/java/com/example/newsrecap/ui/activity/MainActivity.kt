@@ -9,13 +9,16 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.NavHostFragment
-import com.example.newsrecap.NewsRecapApp
 import com.example.newsrecap.R
+import com.example.newsrecap.data.repository.NetworkStatusRepository
 import com.example.newsrecap.databinding.ActivityMainBinding
 import com.example.newsrecap.ui.viewmodel.NewsViewModel
+import com.example.newsrecap.utils.connectivity_observer.NetworkConnectivityObserver
 import com.example.newsrecap.utils.constants.SourcesConstants
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -31,12 +34,25 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupNavigationDrawerMenu()
         setupToolbar()
+        initNetworkStatusObserver()
+    }
 
-        (application as NewsRecapApp).networkConnectivityObserver.observe()
-            .onEach {
-                binding.viewConnectionStatus.updateViewWithConnectStatus(it)
+    @OptIn(FlowPreview::class)
+    private fun initNetworkStatusObserver() {
+        val networkObserver = NetworkConnectivityObserver(context = this.applicationContext)
+        val networkStatusRepository = NetworkStatusRepository(
+            coroutineScope = CoroutineScope(Dispatchers.Default),
+            connectivityObserver = networkObserver
+        )
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                networkStatusRepository.connectionStatus
+                    .debounce(500)
+                    .collect { status ->
+                        binding.viewConnectionStatus.updateViewWithConnectStatus(status)
+                    }
             }
-            .launchIn(lifecycleScope)
+        }
     }
 
     private fun setupNavigationDrawerMenu() {
