@@ -1,6 +1,7 @@
 package com.example.newsrecap.ui.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -36,10 +37,6 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     val selectedNews: LiveData<News> = _selectedNews
 
     private var currentSource: String = SourcesConstants.ALL_NEWS
-
-    init {
-        getNewsListBySource()
-    }
 
     fun getNewsListBySource() {
         viewModelScope.launch {

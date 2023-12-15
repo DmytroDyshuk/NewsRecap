@@ -14,6 +14,7 @@ import com.example.newsrecap.R
 import com.example.newsrecap.data.repository.NetworkStatusRepository
 import com.example.newsrecap.databinding.ActivityMainBinding
 import com.example.newsrecap.ui.viewmodel.NewsViewModel
+import com.example.newsrecap.utils.connectivity_observer.ConnectivityObserver
 import com.example.newsrecap.utils.constants.SourcesConstants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -49,6 +50,9 @@ class MainActivity : AppCompatActivity() {
                     .debounce(500)
                     .collect { status ->
                         binding.viewConnectionStatus.updateViewWithConnectStatus(status)
+                        if (status == ConnectivityObserver.Status.Available) {
+                            viewModel.getNewsListBySource()
+                        }
                     }
             }
         }
