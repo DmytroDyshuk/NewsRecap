@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -16,8 +15,6 @@ import com.example.newsrecap.R
 import com.example.newsrecap.databinding.FragmentNewsListBinding
 import com.example.newsrecap.ui.adapters.NewsListAdapter
 import com.example.newsrecap.ui.viewmodel.NewsViewModel
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class NewsListFragment : Fragment() {
@@ -45,24 +42,15 @@ class NewsListFragment : Fragment() {
         binding.rvNewsList.layoutManager = LinearLayoutManager(requireContext())
         binding.rvNewsList.adapter = adapter
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState
-                    .map { it.source }
-                    .distinctUntilChanged()
-                    .collect { source ->
-                        if (source.isNotBlank()) {
-                            viewModel.getNewsListBySource(source)
-                        }
-                    }
-            }
+        binding.swipeRefreshLayoutNews.setOnRefreshListener {
+            viewModel.getNewsListBySource()
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
                     adapter.submitList(uiState.newsList)
-                    binding.ivLoadingAnimation.isVisible = uiState.isLoading
+                    binding.swipeRefreshLayoutNews.isRefreshing = uiState.isLoading
                 }
             }
         }

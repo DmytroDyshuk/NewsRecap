@@ -1,6 +1,7 @@
 package com.example.newsrecap.utils.constants
 
 object SourcesConstants {
+    const val ALL_NEWS = "all-news"
     const val TIME = "time"
     const val THE_WALL_STREET_JOURNAL = "the-wall-street-journal"
     const val THE_WASHINGTON_POST = "the-washington-post"

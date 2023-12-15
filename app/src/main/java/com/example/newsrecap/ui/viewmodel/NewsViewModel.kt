@@ -12,6 +12,7 @@ import com.example.newsrecap.data.network.RetrofitService
 import com.example.newsrecap.domain.model.News
 import com.example.newsrecap.data.repository.NewsRepository
 import com.example.newsrecap.ui.ui_states.NewsUiState
+import com.example.newsrecap.utils.constants.SourcesConstants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -34,37 +35,19 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     private val _selectedNews = MutableLiveData<News>()
     val selectedNews: LiveData<News> = _selectedNews
 
+    private var currentSource: String = SourcesConstants.ALL_NEWS
+
     init {
-        refreshNews()
+        getNewsListBySource()
     }
 
-    fun refreshNews() {
+    fun getNewsListBySource() {
         viewModelScope.launch {
             try {
                 loadingStarted()
-                val refreshedNewsList = newsRepository.refreshNews()
-                _uiState.update {
-                    it.copy(
-                        newsList = refreshedNewsList,
-                        isLoading = false
-                    )
-                }
-            } catch (ioException: IOException) {
-                _uiState.update {
-                    it.copy(
-                        errorMessage = ioException.message,
-                        isLoading = false
-                    )
-                }
-            }
-        }
-    }
-
-    fun getNewsListBySource(source: String) {
-        viewModelScope.launch {
-            try {
-                loadingStarted()
-                val newsList = newsRepository.getNewsBySource(source)
+                val newsList: List<News> = if (currentSource == SourcesConstants.ALL_NEWS) {
+                    newsRepository.refreshNews()
+                } else newsRepository.getNewsBySource(currentSource)
                 _uiState.update {
                     it.copy(
                         newsList = newsList,
@@ -82,10 +65,8 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun setNewSource(source: String) {
-        _uiState.update {
-            it.copy(source = source)
-        }
+    fun setCurrentSource(source: String) {
+        currentSource = source
     }
 
     fun setNewsTitle(title: String) {
@@ -101,22 +82,6 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     private fun loadingStarted() {
         _uiState.update {
             it.copy(isLoading = true)
-        }
-    }
-
-    private fun getLocalNews() {
-        viewModelScope.launch {
-            try {
-                newsRepository.news.collect { newsList ->
-                    _uiState.update {
-                        it.copy(newsList = newsList)
-                    }
-                }
-            } catch (ioException: IOException) {
-                _uiState.update {
-                    it.copy(errorMessage = ioException.message)
-                }
-            }
         }
     }
 

@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         binding.nvNews.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.item_all_news -> {
-                    setupAllNews()
+                    setupNewsSource(SourcesConstants.ALL_NEWS, getString(R.string.all_news))
                     true
                 }
 
@@ -141,15 +141,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupAllNews() {
-        viewModel.refreshNews()
-        viewModel.setNewsTitle(getString(R.string.all_news))
-        binding.drawerLayout.close()
-    }
-
     private fun setupNewsSource(source: String, newsTitle: String) {
-        viewModel.setNewSource(source)
         viewModel.setNewsTitle(newsTitle)
+        viewModel.setCurrentSource(source)
+        viewModel.getNewsListBySource()
         binding.drawerLayout.close()
     }
 
