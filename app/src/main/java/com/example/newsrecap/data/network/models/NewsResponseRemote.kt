@@ -5,13 +5,13 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class NewsResponseDto(
+data class NewsResponseRemote(
     @Json(name = "status") val status: String,
     @Json(name = "totalResults") val totalResults: Int,
     @Json(name = "articles") val articles: List<NewsRemote>
 )
 
-fun NewsResponseDto.asDomainModel(): NewsResponse {
+fun NewsResponseRemote.asDomainModel(): NewsResponse {
     return NewsResponse(
         status = status,
         totalResults = totalResults,

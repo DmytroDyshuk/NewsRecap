@@ -14,4 +14,7 @@ interface NewsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllNews(news: List<NewsEntity>)
+
+    @Query("DELETE FROM NewsEntity")
+    fun deleteAllNews()
 }

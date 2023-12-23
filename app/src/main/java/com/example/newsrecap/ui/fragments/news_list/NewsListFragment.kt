@@ -43,14 +43,19 @@ class NewsListFragment : Fragment() {
         binding.rvNewsList.adapter = adapter
 
         binding.swipeRefreshLayoutNews.setOnRefreshListener {
-            viewModel.getNewsListBySource()
+            viewModel.getNews()
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
-                    adapter.submitList(uiState.newsList)
+                    adapter.submitList(uiState.newsList) {
+                        binding.rvNewsList.scrollToPosition(0)
+                    }
                     binding.swipeRefreshLayoutNews.isRefreshing = uiState.isLoading
+                    if (uiState.errorMessage != null) {
+                        //TODO: show error: Something went wrong
+                    }
                 }
             }
         }

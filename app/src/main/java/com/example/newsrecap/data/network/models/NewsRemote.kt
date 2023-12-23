@@ -6,9 +6,9 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class NewsRemote(
-    val source: SourceDto?,
+    val source: SourceRemote?,
     val author: String?,
-    val title: String?,
+    val title: String = "",
     val description: String?,
     val url: String?,
     val urlToImage: String?,

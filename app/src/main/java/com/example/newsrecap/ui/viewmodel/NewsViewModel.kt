@@ -13,21 +13,22 @@ import com.example.newsrecap.data.network.RetrofitService
 import com.example.newsrecap.domain.model.News
 import com.example.newsrecap.data.repository.NewsRepository
 import com.example.newsrecap.ui.ui_states.NewsUiState
-import com.example.newsrecap.utils.constants.SourcesConstants
+import com.example.newsrecap.utils.constants.SourcesConstants.ALL_NEWS
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.io.IOException
 
 class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val newsRepository = NewsRepository(
         newsDatabase = getDatabase(application),
         newsApi = RetrofitService.newsApiService,
-        ioDispatcher = Dispatchers.IO
+        ioDispatcher = Dispatchers.IO,
+        externalScope = CoroutineScope(Dispatchers.Default)
     )
 
     private val _uiState = MutableStateFlow(NewsUiState())
@@ -36,29 +37,40 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     private val _selectedNews = MutableLiveData<News>()
     val selectedNews: LiveData<News> = _selectedNews
 
-    private var currentSource: String = SourcesConstants.ALL_NEWS
+    private var currentSource: String = ALL_NEWS
 
-    fun getNewsListBySource() {
+    init {
         viewModelScope.launch {
-            try {
-                loadingStarted()
-                val newsList: List<News> = if (currentSource == SourcesConstants.ALL_NEWS) {
-                    newsRepository.refreshNews()
-                } else newsRepository.getNewsBySource(currentSource)
+            newsRepository.news.collect { newsList ->
                 _uiState.update {
                     it.copy(
                         newsList = newsList,
                         isLoading = false
                     )
                 }
-            } catch (ioException: IOException) {
-                _uiState.update {
-                    it.copy(
-                        errorMessage = ioException.message,
-                        isLoading = false
-                    )
-                }
             }
+        }
+    }
+
+    fun getNews() {
+        viewModelScope.launch {
+            loadingStarted()
+            try {
+                if (currentSource == ALL_NEWS) {
+                    newsRepository.refreshNews()
+                } else {
+                    val newsBySource = newsRepository.getNewsBySource(currentSource)
+                    _uiState.update {
+                        it.copy(
+                            newsList = newsBySource,
+                            isLoading = false
+                        )
+                    }
+                }
+            } catch (exception: Exception) {
+                exception.printStackTrace()
+            }
+            loadingEnded()
         }
     }
 
@@ -79,6 +91,12 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     private fun loadingStarted() {
         _uiState.update {
             it.copy(isLoading = true)
+        }
+    }
+
+    private fun loadingEnded() {
+        _uiState.update {
+            it.copy(isLoading = false)
         }
     }
 

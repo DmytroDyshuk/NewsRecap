@@ -7,29 +7,37 @@ import com.example.newsrecap.domain.model.News
 import com.example.newsrecap.data.network.models.asEntity
 import com.example.newsrecap.data.network.models.asDomainModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
 
 class NewsRepository(
     private val newsDatabase: NewsDatabase,
     private val newsApi: NewsApiService,
-    private val ioDispatcher: CoroutineDispatcher
+    private val ioDispatcher: CoroutineDispatcher,
+    private val externalScope: CoroutineScope
 ) {
 
-    val news: Flow<List<News>> = newsDatabase.newsDao.getNews().map {
+    val news = newsDatabase.newsDao.getNews().map {
         it.asDomainModel()
-    }
+    }.stateIn(
+        scope = externalScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = listOf()
+    )
 
-    suspend fun refreshNews(): List<News> = withContext(ioDispatcher) {
-        val news = newsApi.getEverythingNews()
-        newsDatabase.newsDao.insertAllNews(news.articles.map { it.asEntity() })
-        return@withContext news.articles.map { it.asDomainModel() }
+    suspend fun refreshNews() {
+        withContext(ioDispatcher) {
+            val news = newsApi.getEverythingNews()
+            newsDatabase.newsDao.deleteAllNews()
+            newsDatabase.newsDao.insertAllNews(news.articles.map { it.asEntity() })
+        }
     }
 
     suspend fun getNewsBySource(source: String): List<News> = withContext(ioDispatcher) {
-        return@withContext newsApi.getNews(source)
-            .asDomainModel().articles
+        return@withContext newsApi.getNews(source).asDomainModel().articles
     }
 
 }

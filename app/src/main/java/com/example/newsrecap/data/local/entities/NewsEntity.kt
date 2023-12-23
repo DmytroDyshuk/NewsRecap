@@ -7,11 +7,10 @@ import com.example.newsrecap.domain.model.Source
 
 @Entity
 data class NewsEntity constructor(
-    @PrimaryKey(autoGenerate = true)
-    var primaryKey: Int = 0,
     val source: Source?,
     val author: String?,
-    val title: String?,
+    @PrimaryKey(autoGenerate = false)
+    val title: String = "",
     val description: String?,
     val url: String?,
     val urlToImage: String?,

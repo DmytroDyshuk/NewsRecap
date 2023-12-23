@@ -4,12 +4,12 @@ import com.example.newsrecap.domain.model.Source
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class SourceDto(
+data class SourceRemote(
     val id: String,
     val name: String
 )
 
-fun SourceDto.asDomainModel(): Source {
+fun SourceRemote.asDomainModel(): Source {
     return Source(
         id = this@asDomainModel.id,
         name = this@asDomainModel.name

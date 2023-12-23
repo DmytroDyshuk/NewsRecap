@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                     .collect { status ->
                         binding.viewConnectionStatus.updateViewWithConnectStatus(status)
                         if (status == ConnectivityObserver.Status.Available) {
-                            viewModel.getNewsListBySource()
+                            viewModel.getNews()
                         }
                     }
             }
@@ -148,7 +148,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupNewsSource(source: String, newsTitle: String) {
         viewModel.setNewsTitle(newsTitle)
         viewModel.setCurrentSource(source)
-        viewModel.getNewsListBySource()
+        viewModel.getNews()
         binding.drawerLayout.close()
     }
 
