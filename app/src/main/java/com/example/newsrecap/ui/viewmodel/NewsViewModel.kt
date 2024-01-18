@@ -1,7 +1,6 @@
 package com.example.newsrecap.ui.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,7 +13,6 @@ import com.example.newsrecap.domain.model.News
 import com.example.newsrecap.data.repository.NewsRepository
 import com.example.newsrecap.ui.ui_states.NewsUiState
 import com.example.newsrecap.utils.constants.SourcesConstants.ALL_NEWS
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,7 +26,7 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
         newsDatabase = getDatabase(application),
         newsApi = RetrofitService.newsApiService,
         ioDispatcher = Dispatchers.IO,
-        externalScope = CoroutineScope(Dispatchers.Default)
+        externalScope = viewModelScope
     )
 
     private val _uiState = MutableStateFlow(NewsUiState())
@@ -68,7 +66,7 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
                     }
                 }
             } catch (exception: Exception) {
-                exception.printStackTrace()
+                setErrorState(exception.message)
             }
             loadingEnded()
         }
@@ -78,7 +76,7 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
         currentSource = source
     }
 
-    fun setNewsTitle(title: String) {
+    fun setNewsTitleState(title: String) {
         _uiState.update {
             it.copy(newsTitle = title)
         }
@@ -97,6 +95,12 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     private fun loadingEnded() {
         _uiState.update {
             it.copy(isLoading = false)
+        }
+    }
+
+    private fun setErrorState(exceptionMessage: String?) {
+        _uiState.update {
+            it.copy(errorMessage = exceptionMessage)
         }
     }
 

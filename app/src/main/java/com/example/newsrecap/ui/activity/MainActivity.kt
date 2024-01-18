@@ -146,7 +146,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNewsSource(source: String, newsTitle: String) {
-        viewModel.setNewsTitle(newsTitle)
+        viewModel.setNewsTitleState(newsTitle)
         viewModel.setCurrentSource(source)
         viewModel.getNews()
         binding.drawerLayout.close()

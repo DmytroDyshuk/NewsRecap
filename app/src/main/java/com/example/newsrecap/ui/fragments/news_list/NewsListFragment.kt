@@ -4,15 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.newsrecap.R
 import com.example.newsrecap.databinding.FragmentNewsListBinding
+import com.example.newsrecap.domain.model.News
 import com.example.newsrecap.ui.adapters.NewsListAdapter
 import com.example.newsrecap.ui.viewmodel.NewsViewModel
 import kotlinx.coroutines.launch
@@ -36,7 +37,7 @@ class NewsListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val adapter = NewsListAdapter(onNewsClicked = {
             viewModel.setSelectedNews(it)
-            NavHostFragment.findNavController(this).navigate(R.id.action_newsListFragment_to_newsDetailsFragment)
+            findNavController().navigate(NewsListFragmentDirections.actionNewsListFragmentToNewsDetailsFragment())
         })
 
         binding.rvNewsList.layoutManager = LinearLayoutManager(requireContext())
@@ -49,13 +50,9 @@ class NewsListFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
-                    adapter.submitList(uiState.newsList) {
-                        binding.rvNewsList.scrollToPosition(0)
-                    }
+                    submitListAdapterAndScrollUp(adapter, uiState.newsList)
                     binding.swipeRefreshLayoutNews.isRefreshing = uiState.isLoading
-                    if (uiState.errorMessage != null) {
-                        //TODO: show error: Something went wrong
-                    }
+                    checkErrorStatusAndShowMessage(uiState.errorMessage)
                 }
             }
         }
@@ -64,6 +61,22 @@ class NewsListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun submitListAdapterAndScrollUp(adapter: NewsListAdapter, newsList: List<News>) {
+        adapter.submitList(newsList) {
+            binding.rvNewsList.scrollToPosition(0)
+        }
+    }
+
+    private fun checkErrorStatusAndShowMessage(errorMessage: String?) {
+        if (errorMessage != null) {
+            Toast.makeText(
+                context,
+                "Something went wrong, please try again later :(",
+                Toast.LENGTH_LONG
+            ).show()
+        }
     }
 
 }
