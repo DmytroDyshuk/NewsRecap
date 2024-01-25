@@ -15,11 +15,12 @@ import com.example.newsrecap.data.repository.NetworkStatusRepository
 import com.example.newsrecap.databinding.ActivityMainBinding
 import com.example.newsrecap.ui.viewmodel.NewsViewModel
 import com.example.newsrecap.utils.connectivity_observer.ConnectivityObserver
-import com.example.newsrecap.utils.constants.SourcesConstants
+import com.example.newsrecap.domain.model.Sources
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -62,52 +63,52 @@ class MainActivity : AppCompatActivity() {
         binding.nvNews.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.item_all_news -> {
-                    setupNewsSource(SourcesConstants.ALL_NEWS, getString(R.string.all_news))
+                    setupNewsSource(Sources.ALL_NEWS, getString(R.string.all_news))
                     true
                 }
 
                 R.id.item_wsj -> {
-                    setupNewsSource(SourcesConstants.THE_WALL_STREET_JOURNAL, getString(R.string.wsj_news))
+                    setupNewsSource(Sources.THE_WALL_STREET_JOURNAL, getString(R.string.wsj_news))
                     true
                 }
 
                 R.id.item_washington_post -> {
-                    setupNewsSource(SourcesConstants.THE_WASHINGTON_POST, getString(R.string.the_washington_post))
+                    setupNewsSource(Sources.THE_WASHINGTON_POST, getString(R.string.the_washington_post))
                     true
                 }
 
                 R.id.item_time -> {
-                    setupNewsSource(SourcesConstants.TIME, getString(R.string.time))
+                    setupNewsSource(Sources.TIME, getString(R.string.time))
                     true
                 }
 
                 R.id.item_bbc -> {
-                    setupNewsSource(SourcesConstants.BBC_NEWS, getString(R.string.bbc_news))
+                    setupNewsSource(Sources.BBC_NEWS, getString(R.string.bbc_news))
                     true
                 }
 
                 R.id.item_abc_news -> {
-                    setupNewsSource(SourcesConstants.ABC_NEWS, getString(R.string.abc_news))
+                    setupNewsSource(Sources.ABC_NEWS, getString(R.string.abc_news))
                     true
                 }
 
                 R.id.item_cnn_news -> {
-                    setupNewsSource(SourcesConstants.CNN_NEWS, getString(R.string.cnn_news))
+                    setupNewsSource(Sources.CNN_NEWS, getString(R.string.cnn_news))
                     true
                 }
 
                 R.id.item_fox_news -> {
-                    setupNewsSource(SourcesConstants.FOX_NEWS, getString(R.string.fox_news))
+                    setupNewsSource(Sources.FOX_NEWS, getString(R.string.fox_news))
                     true
                 }
 
                 R.id.item_ign_news -> {
-                    setupNewsSource(SourcesConstants.IGN, getString(R.string.ign))
+                    setupNewsSource(Sources.IGN, getString(R.string.ign))
                     true
                 }
 
                 R.id.item_national_geographic -> {
-                    setupNewsSource(SourcesConstants.NATIONAL_GEOGRAPHIC, getString(R.string.national_geographic))
+                    setupNewsSource(Sources.NATIONAL_GEOGRAPHIC, getString(R.string.national_geographic))
                     true
                 }
 
@@ -131,9 +132,13 @@ class MainActivity : AppCompatActivity() {
                 else -> {
                     lifecycleScope.launch {
                         repeatOnLifecycle(Lifecycle.State.STARTED) {
-                            viewModel.uiState.collect {
-                                binding.toolbar.title = it.newsTitle
-                            }
+                            viewModel.uiState
+                                .distinctUntilChanged { old, new ->
+                                    old.newsTitle == new.newsTitle
+                                }
+                                .collect {
+                                    binding.toolbar.title = it.newsTitle
+                                }
                         }
                     }
                     binding.toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.vector_menu_icon)
@@ -145,9 +150,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupNewsSource(source: String, newsTitle: String) {
-        viewModel.setNewsTitleState(newsTitle)
+    private fun setupNewsSource(source: Sources, newsTitle: String) {
         viewModel.setCurrentSource(source)
+        viewModel.setNewsTitleState(newsTitle)
         viewModel.getNews()
         binding.drawerLayout.close()
     }

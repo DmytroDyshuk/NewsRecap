@@ -16,6 +16,7 @@ import com.example.newsrecap.databinding.FragmentNewsListBinding
 import com.example.newsrecap.domain.model.News
 import com.example.newsrecap.ui.adapters.NewsListAdapter
 import com.example.newsrecap.ui.viewmodel.NewsViewModel
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 class NewsListFragment : Fragment() {
@@ -49,9 +50,20 @@ class NewsListFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState
+                    .distinctUntilChanged { old, new ->
+                        old.isLoading == new.isLoading
+                    }
+                    .collect { uiState ->
+                        binding.swipeRefreshLayoutNews.isRefreshing = uiState.isLoading
+                    }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
                     submitListAdapterAndScrollUp(adapter, uiState.newsList)
-                    binding.swipeRefreshLayoutNews.isRefreshing = uiState.isLoading
                     checkErrorStatusAndShowMessage(uiState.errorMessage)
                 }
             }

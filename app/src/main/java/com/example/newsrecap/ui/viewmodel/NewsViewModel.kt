@@ -12,7 +12,7 @@ import com.example.newsrecap.data.network.RetrofitService
 import com.example.newsrecap.domain.model.News
 import com.example.newsrecap.data.repository.NewsRepository
 import com.example.newsrecap.ui.ui_states.NewsUiState
-import com.example.newsrecap.utils.constants.SourcesConstants.ALL_NEWS
+import com.example.newsrecap.domain.model.Sources
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -35,7 +35,7 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     private val _selectedNews = MutableLiveData<News>()
     val selectedNews: LiveData<News> = _selectedNews
 
-    private var currentSource: String = ALL_NEWS
+    private var currentSource: Sources = Sources.ALL_NEWS
 
     init {
         viewModelScope.launch {
@@ -54,10 +54,10 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             loadingStarted()
             try {
-                if (currentSource == ALL_NEWS) {
+                if (currentSource == Sources.ALL_NEWS) {
                     newsRepository.refreshNews()
                 } else {
-                    val newsBySource = newsRepository.getNewsBySource(currentSource)
+                    val newsBySource = newsRepository.getNewsBySource(currentSource.source)
                     _uiState.update {
                         it.copy(
                             newsList = newsBySource,
@@ -72,7 +72,7 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun setCurrentSource(source: String) {
+    fun setCurrentSource(source: Sources) {
         currentSource = source
     }
 
