@@ -17,7 +17,7 @@ class InternetConnectionStatusView @JvmOverloads constructor(
     defStyle: Int = 0
 ) : FrameLayout(context, attrs, defStyle) {
 
-    private val translationYStart = -30F
+    private val translationYStart = -45F
     private val translationYEnd = 0F
 
     private val binding: ViewInternentConnectionStatusBinding =
@@ -75,10 +75,10 @@ class InternetConnectionStatusView @JvmOverloads constructor(
             val animatorIn = createAnimator(
                 binding.root,
                 startValue = binding.root.translationY,
-                endValue = translationYStart - 30
+                endValue = translationYStart - 45
             )
             animatorIn.start()
-        }, 800L)
+        }, 700L)
     }
 
     private fun createAnimator(view: View, startValue: Float, endValue: Float): ObjectAnimator {

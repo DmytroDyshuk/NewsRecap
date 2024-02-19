@@ -16,6 +16,7 @@ import com.example.newsrecap.databinding.ActivityMainBinding
 import com.example.newsrecap.ui.viewmodel.NewsViewModel
 import com.example.newsrecap.utils.connectivity_observer.ConnectivityObserver
 import com.example.newsrecap.domain.model.Sources
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -23,11 +24,12 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val viewModel: NewsViewModel by viewModels { NewsViewModel.Factory(application) }
+    private val viewModel: NewsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -42,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     @OptIn(FlowPreview::class)
     private fun initNetworkStatusObserver() {
         val networkStatusRepository = NetworkStatusRepository(
-            coroutineScope = CoroutineScope(Dispatchers.Default),
+            externalScope = CoroutineScope(Dispatchers.Default),
             connectivityObserver = (application as NewsRecapApp).networkConnectivityObserver
         )
         lifecycleScope.launch {

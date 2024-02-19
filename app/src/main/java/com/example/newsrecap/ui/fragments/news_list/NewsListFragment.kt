@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
@@ -16,18 +16,17 @@ import com.example.newsrecap.databinding.FragmentNewsListBinding
 import com.example.newsrecap.domain.model.News
 import com.example.newsrecap.ui.adapters.NewsListAdapter
 import com.example.newsrecap.ui.viewmodel.NewsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class NewsListFragment : Fragment() {
 
     private var _binding: FragmentNewsListBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: NewsViewModel by lazy {
-        val activity = requireNotNull(this.activity)
-        ViewModelProvider(activity, NewsViewModel.Factory(activity.application))[NewsViewModel::class.java]
-    }
+    private val viewModel: NewsViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentNewsListBinding.inflate(inflater, container, false)
@@ -85,7 +84,7 @@ class NewsListFragment : Fragment() {
         if (errorMessage != null) {
             Toast.makeText(
                 context,
-                "Something went wrong, please try again later :(",
+                "$errorMessage",
                 Toast.LENGTH_LONG
             ).show()
         }

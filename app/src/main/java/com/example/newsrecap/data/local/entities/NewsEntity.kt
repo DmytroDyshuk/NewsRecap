@@ -9,12 +9,12 @@ import com.example.newsrecap.domain.model.Source
 data class NewsEntity constructor(
     val source: Source?,
     val author: String?,
-    @PrimaryKey(autoGenerate = false)
-    val title: String = "",
+    val title: String?,
     val description: String?,
     val url: String?,
     val urlToImage: String?,
-    val publishedAt: String?,
+    @PrimaryKey(autoGenerate = false)
+    val publishedAt: String = "",
     val content: String?
 )
 

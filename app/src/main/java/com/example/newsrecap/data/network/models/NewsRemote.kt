@@ -8,11 +8,11 @@ import com.squareup.moshi.JsonClass
 data class NewsRemote(
     val source: SourceRemote?,
     val author: String?,
-    val title: String = "",
+    val title: String?,
     val description: String?,
     val url: String?,
     val urlToImage: String?,
-    val publishedAt: String?,
+    val publishedAt: String = "",
     val content: String?
 )
 
