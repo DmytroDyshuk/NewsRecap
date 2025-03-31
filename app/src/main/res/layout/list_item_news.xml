@@ -44,7 +44,6 @@
                     android:layout_marginEnd="8dp"
                     tools:text="The Washington Post" />
 
-
                 <TextView
                     android:id="@+id/tv_news_time"
                     android:layout_width="wrap_content"

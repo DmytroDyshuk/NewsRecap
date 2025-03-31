@@ -46,6 +46,6 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideNewsApi(retrofit: Retrofit): NewsApiService {
-        return retrofit.create()
+        return retrofit.create(NewsApiService::class.java)
     }
 }
