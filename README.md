@@ -1,3 +1,8 @@
+[![support version](https://img.shields.io/badge/kotlin-2.1.0%2B-blueviolet.svg?style=flat&logo=kotlin&label=kotlin&labelColor=%23000&color=%23a97bff)](https://github.com/JetBrains/kotlin/releases/tag/v2.1.0)
+[![support version](https://img.shields.io/badge/kotlin-2.55%2B-blueviolet.svg?style=flat&logo=android&label=Hilt&labelColor=%23000&color=%234cc71e)](https://github.com/google/dagger/releases/tag/dagger-2.55)
+[![support version](https://img.shields.io/badge/Room-2.6.1-blueviolet.svg?style=flat&logo=sqlite&logoColor=%23d085a0&label=Room&labelColor=%23000&color=%23d085a0)](https://developer.android.com/jetpack/androidx/releases/room)
+[![support version](https://img.shields.io/badge/Retrofit-2.11.0-blueviolet.svg?style=flat&logo=postman&label=Retrofit&labelColor=%23000&color=%23FF6C37)](https://github.com/square/retrofit/releases/tag/2.11.0)
+
 # News Recap
 
 ## Overview
